@@ -19,6 +19,7 @@ COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
 IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 """
+
 """persistent_lru_cache.py - A persistent LRU cache decorator
 """
 # Based on lru_cache from functools in the standard library, which
@@ -31,9 +32,9 @@ __all__ = ["persistent_lru_cache"]
 try:
     import atexit
     import pickle
-    from functools import update_wrapper
-    from collections import namedtuple
     from _thread import RLock
+    from collections import namedtuple
+    from functools import update_wrapper
 except BaseException:
 
     class RLock:
@@ -146,7 +147,6 @@ def persistent_lru_cache(filename, save_every=1, maxsize=128, typed=False):
     PREV, NEXT, KEY, RESULT = 0, 1, 2, 3  # names for the link fields
 
     def decorating_function(user_function):
-
         lock = RLock()  # because linkedlist updates aren't threadsafe
 
         try:
